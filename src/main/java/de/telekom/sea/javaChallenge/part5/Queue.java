@@ -57,18 +57,18 @@ public class Queue implements PersonenSchlange {
 	}
 
 	@Override
-	public int search(Person person) { // search an specific person in array
-		if (person != null) {
-			for (int i = 0; i < getSize(); i++) {
-				if (personArray[i].equals(person)) {
+	public int search(Person person) {
+		Person p;
+		int foundIndex = -1;// search an specific person in array
+		for (int i = 0; i < getSize(); i++) {
+				p = (Person) personArray[i];
+				if (p.equals(person)) {
 					System.out.println("Index of found person is " + i);
-					return i;
+					foundIndex = i;
 				}
 			}
-		} else {
-			throw new RuntimeException();
-		}
-		return -1;
+		
+		return foundIndex;
 	}
 
 	public Person get(int index) { // returns person in the array which index is written
