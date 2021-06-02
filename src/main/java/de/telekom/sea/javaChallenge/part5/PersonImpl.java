@@ -10,17 +10,7 @@ public class PersonImpl implements Person {
 		this.nachname = nachname;
 	}
 
-	public void setVorname(String vorname) {
-		if (vorname != "") {
-			this.vorname = vorname;
-		}
-
-	}
-
-	public void setNachname(String nachname) {
-		if (nachname != "") {
-			this.nachname = nachname;
-		}
+	public PersonImpl() {
 	}
 
 	@Override

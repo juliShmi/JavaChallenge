@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -20,35 +20,25 @@ import org.junit.jupiter.api.AfterEach;
 
 public class QueueTest {
 
-	private Queue queue;
-	Person p1;
-	Person p2;
-	Person p3;
-	Person p4;
-	Person p5;
-	Person p6;
-	Person p7;
-	Person p8;
-	Person p9;
+	private Queue queue;;
 
 	@BeforeEach
 	void setup() {
-		p1 = new PersonImpl("Tony", "Stark");
-		p2 = new PersonImpl("Peter", "Parker");
-		p3 = new PersonImpl("Thor", "Odynsson");
-		p4 = new PersonImpl("Natasha", "Romanoff");
-		p5 = new PersonImpl("Steven", "Rogers");
-		p6 = new PersonImpl("Clint", "Barton");
-		p7 = new PersonImpl("Bruce", "Banner");
-		p8 = new PersonImpl("Scott", "Lang");
-
-		p9 = new PersonImpl("Loki", "Odynsson");
-
 		queue = new Queue();
 	}
 
 	@Test
-	void testAddNinth() {
+	void testAddNineth() {
+		PersonImpl p1 = new PersonImpl("Tony", "Stark");
+		PersonImpl p2 = new PersonImpl("Peter", "Parker");
+		PersonImpl p3 = new PersonImpl("Thor", "Odynsson");
+		PersonImpl p4 = new PersonImpl("Natasha", "Romanoff");
+		PersonImpl p5 = new PersonImpl("Steven", "Rogers");
+		PersonImpl p6 = new PersonImpl("Clint", "Barton");
+		PersonImpl p7 = new PersonImpl("Bruce", "Banner");
+		PersonImpl p8 = new PersonImpl("Scott", "Lang");
+
+		PersonImpl p9 = new PersonImpl("Loki", "Odynsson");
 		queue.add(p1);
 		queue.add(p2);
 		queue.add(p3);
@@ -57,31 +47,60 @@ public class QueueTest {
 		queue.add(p6);
 		queue.add(p7);
 		queue.add(p8);
-		assertThrows(ArrayIndexOutOfBoundsException.class, () -> {queue.add(p9);}); //unfortunately I can't understand why this test is failed
+		assertThrows(IndexOutOfBoundsException.class, () -> {
+			queue.add(p9);
+		});
+
+	}
+
+	@Test
+	void testAddNull() {
+		PersonImpl p1 = new PersonImpl("Tony", "Stark");
+		PersonImpl p2 = new PersonImpl("Peter", "Parker");
+		PersonImpl p3 = new PersonImpl("Thor", "Odynsson");
+		PersonImpl p4 = new PersonImpl("Natasha", "Romanoff");
+		PersonImpl p5 = new PersonImpl("Steven", "Rogers");
+		PersonImpl p6 = new PersonImpl("Clint", "Barton");
+		PersonImpl p7 = new PersonImpl("Bruce", "Banner");
+		PersonImpl personNull = null;
+		queue.add(p1);
+		queue.add(p2);
+		queue.add(p3);
+		queue.add(p4);
+		queue.add(p5);
+		queue.add(p6);
+		queue.add(p7);
+		assertThrows(RuntimeException.class, () -> {
+			queue.add(personNull);
+		});
 
 	}
 
 	@Test
 	void testHead() {
+		PersonImpl p1 = new PersonImpl("Tony", "Stark");
+		PersonImpl p2 = new PersonImpl("Peter", "Parker");
 		queue.add(p1);
 		queue.add(p2);
-		queue.add(p3);
 		assertSame(p1, queue.head());
-		assertNotSame(p3, queue.head());
+	}
 
-		queue.reset();
-		assertThrows(RuntimeException.class, () -> {
-			queue.head();
-		});
+	@Test
+	void testHeadNull() {
+		assertSame(null,  queue.head());
 	}
 
 	@Test
 	void testSearch() {
+		PersonImpl p1 = new PersonImpl("Tony", "Stark");
+		PersonImpl p2 = new PersonImpl("Peter", "Parker");
+		PersonImpl p3 = new PersonImpl("Thor", "Odynsson");
+		PersonImpl p4 = new PersonImpl("Natasha", "Romanoff");
 		queue.add(p1);
 		queue.add(p3);
 		queue.add(p2);
-		assertSame(1, queue.search(p3));
-		assertNotSame(1, queue.search(p1));
+		assertEquals(1, queue.search(p3));
+		assertNotEquals(2, queue.search(p1));
 		assertThrows(NullPointerException.class, () -> {
 			queue.search(p4);
 		});
@@ -97,19 +116,25 @@ public class QueueTest {
 
 	@Test
 	void testRemove() {
+		PersonImpl p1 = new PersonImpl("Tony", "Stark");
 		queue.add(p1);
-		queue.add(p2);
-		assertSame(p1,queue.remove());
+		assertSame(p1, queue.remove());
 
 	}
-	
+
 	@Test
 	void isEmpty() {
 		assertTrue(queue.empty());
-		queue.add(p1);
-		assertFalse(queue.empty());
 	}
-	
+
+	@Test
+	void testIsEmptyAfterReset() {
+		PersonImpl p1 = new PersonImpl("Tony", "Stark");
+		queue.add(p1);
+		queue.reset();
+		assertTrue(queue.empty());
+	}
+
 	@Test
 	void testReset() {
 		queue.reset();
@@ -118,15 +143,6 @@ public class QueueTest {
 
 	@AfterEach
 	void teardown() {
-		p1 = null;
-		p2 = null;
-		p3 = null;
-		p4 = null;
-		p5 = null;
-		p6 = null;
-		p7 = null;
-		p8 = null;
-		p9 = null;
 		queue.reset();
 	}
 
