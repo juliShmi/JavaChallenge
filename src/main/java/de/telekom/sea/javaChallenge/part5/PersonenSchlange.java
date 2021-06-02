@@ -13,4 +13,6 @@ public interface PersonenSchlange {
 	public boolean empty();
 
 	public int search(Person person);
+	
+	public int getSize();
 }
