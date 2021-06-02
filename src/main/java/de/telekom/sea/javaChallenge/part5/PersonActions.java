@@ -1,20 +1,22 @@
 package de.telekom.sea.javaChallenge.part5;
 
+import java.util.NoSuchElementException;
+
 public class PersonActions {
 
-	private Person[] personArray = new Person[8];
+	public static Person[] personArray = new Person[8];
 	private int index = 0;
 
-	public boolean add(Person person) {
+	public boolean add(Person person) {					//adds a new Person to the array
 		if (person != null) {
-			while (personArray[index] != null) {
+			while (personArray[index] != null) {		//make checking whether Person by itself or person in an array is Null
 				try {
 					index++;
 				} catch (RuntimeException e) {
 					System.out.println("No free places in list");
 				}
 			}
-			personArray[index] = person;
+			personArray[index] = person;				//array with index has value Person
 			System.out.println("index = " + index);
 			++index;
 			return true;
@@ -23,30 +25,23 @@ public class PersonActions {
 		}
 	}
 
-	public boolean remove(Person person) {
-		boolean success = false;
-		if (this.personArray.length > 0)
-			for (int i = 0; i < this.personArray.length; i++) 
-			{
-				Person sPerson = (Person) this.personArray[i];
-				if ((sPerson != null && personArray[i].equals(person))) {
-					this.personArray[i] = null;
-					for (int j = i; j < this.size(); j++) {
-						this.personArray[j] = personArray[j + 1];
-						personArray[j + 1] = null;
-					}
-					success = true;
-					return success;
-				}
+	public Person remove() {						//remove the first person (person which is in position 0 in array)
+		Person p = null;							
+		if (this.size() > 0) {
+			p = personArray[0];
+			for (int j = 0; j < this.size(); j++) {
+				personArray[j] = personArray[j + 1];
+				personArray[j + 1] = null;
 			}
-		return success;
+		}
+		return p;
 	}
 
-	private int size() {
+	public int size() {							//count how many persons are in array 
 		int sum = 0;
 		for (int i = 0; i < personArray.length; i++) {
 			if (personArray[i] != null) {
-				sum++;
+				sum++;							// variable sum ++ if the element in array is not Null;
 			}
 		}
 		return sum;
