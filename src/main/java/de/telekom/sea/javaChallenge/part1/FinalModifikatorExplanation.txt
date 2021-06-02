@@ -1,0 +1,3 @@
+Der folgende Java-Code funktioniert nicht, weil die Variable des primitiven Typs "i" Modifikator "final" hat. Das bedeutet, dass diese Variable immer dieselbe Bedeutung hat und nicht verändert werden kann.
+
+Der Code wird funktionieren, wenn "final"-Modifikator gelöscht wird.
