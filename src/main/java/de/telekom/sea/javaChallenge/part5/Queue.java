@@ -2,90 +2,65 @@ package de.telekom.sea.javaChallenge.part5;
 
 public class Queue implements PersonenSchlange {
 
-	private Person[] personArray = new Person[8];;
-	private int index = 0;
+	private PersonActions personArray;
+
+	public Queue() {
+		this.personArray = new PersonActions();
+	}
 
 	@Override
 	public void add(Person person) {
 		if (person != null) {
-			while (personArray[index] != null) { // make checking whether Person by itself or person in an array is Null
-				try {
-					personArray[index] = (PersonImpl) person;
-				} catch (RuntimeException e) {
-					System.out.println("No free places in list");
-				}
-			}
-			index += 1; 							// array with index has value Person
-
+			personArray.add((PersonImpl) person);
 		} else {
-			throw new RuntimeException("Participant you're trying to add has value Null");
+			throw new RuntimeException();
 		}
+
 	}
 
+	@Override
 	public Person head() {
-		Person p = personArray[0];
-		return p;
-	}
-
-	@Override
-	public Person remove() { // remove the first person (person which is in position 0 in array)
-		Person p = null;
-		if (this.getSize() > 0) {
-			p = personArray[0];
-			for (int j = 0; j < this.getSize(); j++) {
-				personArray[j] = personArray[j + 1];
-				personArray[j + 1] = null;
-			}
+		PersonImpl p = (PersonImpl) getPerson(0);
+		if (p != null) {
+			return p;
 		}
+		return null;
+	}
+
+	@Override
+	public Person remove() {
+		PersonImpl p = personArray.remove();
 		return p;
 	}
 
 	@Override
-	public void reset() { // deletes all elements in array
-		personArray = new PersonImpl[0];
-		System.out.println("Array is empty");
+	public void reset() {
+		personArray.clear();
 
 	}
 
 	@Override
 	public boolean empty() {
-		// check if the array is empty
-		if (getSize() == 0) {
-			return true;
-		}
-		return false;
+		boolean result = personArray.Isempty();
+		return result;
 	}
 
 	@Override
 	public int search(Person person) {
-		Person p;
-		int foundIndex = -1;// search an specific person in array
-		for (int i = 0; i < getSize(); i++) {
-				p = (Person) personArray[i];
-				if (p.equals(person)) {
-					System.out.println("Index of found person is " + i);
-					foundIndex = i;
-				}
-			}
-		
-		return foundIndex;
+		int index = personArray.search((PersonImpl) person);
+		return index;
 	}
 
-	public Person get(int index) { // returns person in the array which index is written
-		if (index < 0 && index < personArray.length) {
-			return personArray[index];
-		}
-		return null; // returns Null in Person not found;
-	}
-
+	@Override
 	public int getSize() {
-		int sum = 0;
-		for (int i = 0; i < personArray.length; i++) {
-			if (personArray[i] != null) {
-				sum++; // variable sum ++ if the element in array is not Null;
-			}
-		}
-		return sum;
+		int count = personArray.size();
+		return count;
+	}
+
+	public Person getPerson(int index) {
+		PersonImpl p = personArray.get(index);
+		return p;
+
 	}
 
 }
