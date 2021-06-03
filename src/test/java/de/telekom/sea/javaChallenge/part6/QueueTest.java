@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -101,14 +102,13 @@ public class QueueTest {
 		queue.add(p2);
 		assertEquals(1, queue.search(p3));
 		assertNotEquals(2, queue.search(p1));
-		assertThrows(NullPointerException.class, () -> {
-			queue.search(p4);
-		});
+		assertEquals(-1,queue.search(p4));
 
 	}
 
 	@Test
 	void testRemoveIfEmpty() {
+		queue.reset();
 		assertThrows(NoSuchElementException.class, () -> {
 			queue.remove(); // Exception if the array is empty
 		});
@@ -117,9 +117,13 @@ public class QueueTest {
 	@Test
 	void testRemove() {
 		PersonImpl p1 = new PersonImpl("Tony", "Stark");
+		PersonImpl p2 = new PersonImpl("Peter", "Parker");
 		queue.add(p1);
-		assertSame(p1, queue.remove());
-
+		queue.add(p2);
+		queue.remove();
+		assertSame("Parker", queue.getPerson(0).getNachname());
+		assertSame(p2, queue.getPerson(0));
+		assertNotSame(p1, queue.getPerson(0));
 	}
 
 	@Test

@@ -13,14 +13,21 @@ public class PersonImpl implements Person {
 	public PersonImpl() {
 	}
 
-	@Override
 	public String getVorname() {
 		return this.vorname;
 	}
 
-	@Override
 	public String getNachname() {
 		return this.nachname;
 	}
 
+	public void setVorname(String vorname) {
+		this.vorname = vorname;
+	}
+
+	// set surname
+	public void setNachname(String nachname) {
+		this.nachname = nachname;
+
+	}
 }
