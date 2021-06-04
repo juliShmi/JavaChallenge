@@ -14,20 +14,30 @@ public class PersonImpl implements Person {
 	}
 
 	public String getVorname() {
-		return this.vorname;
+		if (this.vorname != null) {
+			return this.vorname;
+		}
+		throw new NullPointerException();
 	}
 
 	public String getNachname() {
-		return this.nachname;
+		if (this.nachname != null) {
+			return this.nachname;
+		}
+		throw new NullPointerException();
 	}
 
 	public void setVorname(String vorname) {
-		this.vorname = vorname;
+		if (vorname != "") {
+			this.vorname = vorname;
+		}
 	}
 
 	// set surname
 	public void setNachname(String nachname) {
-		this.nachname = nachname;
+		if (nachname != "") {
+			this.nachname = nachname;
+		}
 
 	}
 }

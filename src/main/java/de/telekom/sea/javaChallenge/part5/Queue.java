@@ -3,14 +3,14 @@ package de.telekom.sea.javaChallenge.part5;
 public class Queue implements PersonenSchlange {
 
 	private PersonActions personArray;
-
+													//all methods description is in PersonAction class
 	public Queue() {
 		this.personArray = new PersonActions();
 	}
 
 	@Override
 	public void add(Person person) {
-		if (person != null) {
+		if (person != null) {					//adds new person in array (if person is != Null
 			personArray.add((PersonImpl) person);
 		} else {
 			throw new RuntimeException();
@@ -19,7 +19,7 @@ public class Queue implements PersonenSchlange {
 	}
 
 	@Override
-	public Person head() {
+	public Person head() {					//returns the first element in array (head of queue)
 		PersonImpl p = (PersonImpl) getPerson(0);
 		if (p != null) {
 			return p;
@@ -28,19 +28,19 @@ public class Queue implements PersonenSchlange {
 	}
 
 	@Override
-	public Person remove() {
+	public Person remove() {				//removes the first person in array (see PersonAction class for details)
 		PersonImpl p = personArray.remove();
 		return p;
 	}
 
 	@Override
-	public void reset() {
+	public void reset() {					//deletes all elements in array
 		personArray.clear();
 
 	}
 
 	@Override
-	public boolean empty() {
+	public boolean empty() {				//check if array is empty
 		boolean result = personArray.Isempty();
 		return result;
 	}
